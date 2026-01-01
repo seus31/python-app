@@ -6,13 +6,11 @@ RUN mkdir $WEB_APP_PATH
 WORKDIR $WEB_APP_PATH
 
 
-COPY ./frontend $WEB_APP_PATH
-
-RUN rm -rf .yarn
-RUN rm -rf node_modules
-RUN rm -rf yarn.lock
+COPY package*.json .
 
 RUN yarn install
+
+COPY . .
 
 EXPOSE 3000
 

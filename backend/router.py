@@ -5,13 +5,19 @@ from controller import auth_controller
 from controller import task_controller
 from controller import user_controller
 from logging import config
+from pathlib import Path
 from json import load
 import logger
 
 router = Blueprint('router', __name__)
 
-with open("./config/logging.json", "r", encoding="utf-8") as f:
-    config.dictConfig(load(f))
+base_dir = Path(__file__).resolve().parent
+log_dir = base_dir / "logs"
+log_dir.mkdir(exist_ok=True)
+with open(base_dir / "config" / "logging.json", "r", encoding="utf-8") as f:
+    logging_config = load(f)
+logging_config["handlers"]["file"]["filename"] = str(log_dir / "application.log")
+config.dictConfig(logging_config)
 
 
 @router.route("/api/v1/register", methods=['POST'])

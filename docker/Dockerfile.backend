@@ -4,10 +4,10 @@ WORKDIR /backend
 
 RUN apt-get update && apt-get -y install gcc libmariadb-dev
 
-COPY ./backend/requirements.txt /backend
+COPY ./requirements.txt /backend
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./backend /backend
+COPY . .
 
 CMD ["python", "main.py"]
