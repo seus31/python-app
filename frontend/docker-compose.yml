@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./frontend:/app
+      - python-app-frontend-node-modules:/app/node_modules
+      - python-app-frontend-yarn:/app/.yarn
+    networks:
+      - python-app-frontend-network
+    ports:
+      - "${EXPOSE_APP_PORT}:3000"
+
+networks:
+  python-app-frontend-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.35.3.0/24
+
+volumes:
+  python-app-frontend-node-modules:
+  python-app-frontend-yarn:
